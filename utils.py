@@ -273,52 +273,6 @@ def getEmployeeHistory(emp):
     print("Total Hours:",totalhours, "Number of Shifts:", numshifts, "Average Hours:", averagehours)
     return shifts, [totalhours, numshifts, averagehours]#, weekhours]
 
-#Pulls current weeks schedule from email. Downloads PDF and returns the PDF location
-def getCurrentSchedule():
-    w = getDaysOfWeek()
-    #print(w.firstDate, w.lastDate, w.prevDate)
-    sunday = w.prevDate.strftime('%d-%b-%Y')
-    sat = w.prevDate - dt.timedelta(days = 1)
-    saturday = sat.strftime('%d-%b-%Y')
-    monday = w.firstDate.strftime('%d-%b-%Y')
-    print(sunday, saturday)
-    em = "workmailerloader@gmail.com"
-    psw = "workthingmailer"
-    sdir = "PDFs"
-    mail = imaplib.IMAP4_SSL("imap.gmail.com")
-    mail.login(em, psw)
-    mail.select()
-    #earch = '(SINCE "' + str(w.lastDate) + '")'
-    typ, data = mail.search(None, 'OR', 'SENTON %s' % sunday, 'SENTON %s' % saturday)#, 'SENTON %s' %monday)
-    data = data[0].split()
-    for id in data:
-        resp, dat = mail.fetch(id, '(RFC822)')
-        eb = dat[0][1]
-        m = email.message_from_bytes(eb)
-        if(m.get_content_maintype() != 'multipart'):
-            continue
-        for part in m.walk():
-            if(part.get_content_maintype() == 'multipart'):
-                continue
-            if(part.get('Content-Disposition') is None):
-                continue
-            fn = part.get_filename()
-            if(fn[0] != "S"):
-                fn = str(monday) + ".pdf"
-            print(fn)
-            if(fn is not None):
-                svp = os.path.join(sdir, fn)
-                if not (os.path.isfile(svp)):
-                    print(svp)
-                    fp = open(svp, 'wb')
-                    fp.write(part.get_payload(decode = True))
-                    fp.close()
-                    return svp
-                    #return part.get_payload(decode = True)
-                else:
-                    print("File:", str(svp), "already exists.")
-                    return svp
-
 def getEmployeeWeek(emp):
     shifts = []
     c = DB()
