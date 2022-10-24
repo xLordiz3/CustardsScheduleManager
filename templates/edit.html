@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+{% if type == "init" %}
+<div class="esedit">
+    <form method="post" action="/edit">
+        <select id="sempse" name="sempse">
+            {% for e in emps %}
+                <option value="{{ e }}">{{ e }} </option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="esel" value="Select"/>
+    </form>
+</div>
+    <select id="sshie" name="sshie">
+        {% for e in emps %}
+            <option value="{{ e }}">{{ e }} </option>
+        {% endfor %}
+    </select>
+
+{% endif %}
+
+
+{% if type == "ssel" %}
+<div class="shdit" >
+    <h3> {{ selem }}</h3> 
+    <div class="week">
+    <table title="{{ fdate }} - {{ ldate }}">
+        <caption> {{ fdate }} - {{ ldate }}</caption>
+        {% set days=["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"] %}
+        <tr>
+            {% for d in days %}
+                <th>{{ d }}</th>
+                {% for i in shifts %}
+                    {% if i.day == d %}
+                    <form method="POST" action="/editshi">
+                        <td class={{ d }}>{{ i.employee}} {{ i.time}} 
+                            <input type="submit" name="shiftsel" value="Select"/> 
+                            <input type="hidden" id="shift" name="shift" value="{{ i.employee,i.date,i.day,i.time,i.hours }}">
+                        </td>         
+                    </form>
+                    {% endif %}
+                {% endfor %}
+        </tr>
+            {% endfor %}
+        <br>
+    </table>
+    </div>
+</div>
+{% endif %}
+
+{%  if type == "eshift" %}
+
+<div class="shiedit"> 
+<form method="post" action="/editshi">
+    <label>Name: </label>
+    <select name="empin" id="empin">
+        <option value = "{{ selshift.employee }}"> {{ selshift.employee }} </option>
+    {% for e in emps %}
+        {% if e != selshift.employee and e != "" %}
+            <option value="{{ e }}">{{ e }}</option>
+        {% endif %}
+    {% endfor %}
+    </select>
+    <br>
+    <label>Time: </label>
+    <input type="time" name="st" id="st" value="{{ start }}"/>
+    -
+    <input type="time" name="et" id="et" value="{{ end }}"/>
+    <br>
+    <label>Day: {{ selshift.day }}</label>
+    <br>
+    <label>Date: {{ selshift.date }}</label>
+    <br>
+    <label>Original Time: {{ selshift.time }}</label>
+    <br>
+    <label>Hours: {{ selshift.hours }}</label>
+    <br>
+    <input type="hidden" name="emp" value="{{ selshift.employee }}"/>
+    <input type="hidden" name="time" value="{{ selshift.time }}"/>
+    <input type="hidden" name="day" value="{{ selshift.day }}"/>
+    <input type="hidden" name="date" value="{{ selshift.date }}"/>
+    <input type="hidden" name="hours" value="{{ selshift.hours }}"/>
+    <input type="submit" name="sss" value="Change"/>
+    <input type="submit" name="sdel" value="Delete"/>
+</form>    
+
+</div>
+{% endif %}
+{% endblock %}

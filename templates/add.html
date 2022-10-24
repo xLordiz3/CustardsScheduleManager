@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<div class="addthing">
+{% if type == "emp" %}
+<form method="post" action="/addemp">
+    <label>Name:</label>
+    <input type="text" id="empname" name="empname"/>
+    <br>
+    <label>Role:</label>
+    <select id="emprole" name="emprole">
+        {% for r in roles %}
+            <option value='{{ r }}'>{{ r }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label>Phone:</label>
+    <input type="text" id="empphone" name="empphone">
+    <br>
+    <input type="submit" name="addempsel" value="Add Employee"/>
+</form>
+{% endif %}
+
+{% if type == "shi" %}
+<form method="post" action="/addshi">
+    <label>Name:</label>
+    <select id="empname" name="empname">
+        {% for e in emps %}
+            <option value="{{ e }}">{{ e }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label>Time:</label>
+    <input type="time" name="st" id="st" value="00:00"/>
+    -
+    <input type="time" name="et" id="et" value="00:00"/>
+    <br>
+    <label>Day:</label>
+    <select id="day", name="day">
+        {% for d in days %}
+            <option value='{{ d }}'>{{ d }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label>Date:</label>
+    <input type="date" id="date" name="date" value="{{ today }}"/>
+    <br>
+    <input type="submit" name="addshisel" id="addshisel" value="Add Shift"/>
+</form>
+{% endif %}
+</div>
+
+{% endblock %}

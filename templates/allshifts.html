@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<div class="jumptron">
+    <h1>All Shifts</h1>
+</div>
+<div class="week">
+    <table title="shifts">
+        <caption>All Shifts</caption>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Options</th>
+        </tr>
+        {% for s in shifts %}
+        <tr>
+            <form method="post" action="/shifts">
+                <td>{{ s.employee }}</td>
+                <td>{{ s.date }}</td>
+                <td>{{ s.time }}</td>
+                <td><input type="submit" name="shiedit" id="shiedit" value="Edit"/> <input type="submit" name="shiswi" id="shiswi" value="Switch"/> <input type="hidden" name="eshift" id="eshift" value="{{ s.employee,s.date,s.time }}"/> </td>
+            </form>
+        </tr>
+        {% endfor %}
+        
+    </table>
+</div>
+
+{% endblock %}

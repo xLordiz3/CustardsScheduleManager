@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<div class="empsel">
+    <form method="POST", action="/employees">
+        <select id="emps" , name="emps">
+            {% for e in emps %}
+            <option value="{{ e }}">{{ e }} </option>
+            {%endfor%}
+        </select>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+<div class="curemp">
+    {% if name != None %}
+        <p> Name </p>
+        <p>{{ name }}</p>
+        <p> Total Hours: {{ total }}</p>
+        <br />
+        <p>Number of Shifts {{ nums }}</p>
+        <br />
+        <p>Average Hours: {{ avg }}</p>
+        <br>
+        <p>Week Hours: {{ weektotal }} </p>
+        <br>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Hours</th>
+            </tr>
+        {% for shift in shifts %}  
+        <tr>
+            <td>{{ shift.date }}</td>
+            <td>{{ shift.day }}</td>
+            <td>{{ shift.time }}</td>
+            <td>{{ shift.hours }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}

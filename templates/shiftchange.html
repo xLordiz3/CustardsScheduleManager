@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+{% if ph1 == "yes" %}
+<form method="POST", action="/shiftchange">  
+{# First Employee Select #}
+    <select id="scemps" name="scemps">
+        {% for e in emps %}
+            <option value="{{ e }}">{{ e }} </option>
+        {%endfor%}
+    </select>
+    <input type="hidden" id="e1" name="e1" value="">
+    <input type="hidden" id="e2" name="e2" value="yes">
+    <input type="hidden" id="e3" name="e3" value="">
+    <input type="hidden" id="e4" name="e4" value="">
+    <input type="hidden" id="e5" name="e5" value="">
+    <input type="submit" name="emp1" value="First Employee"/>
+    <input type="hidden" id="ct" name="ct" value="{{ ct }}"/>
+</form>
+{% endif %}
+
+<br>
+
+{% if ph2 == "yes" %}
+<form id="e1s", method="POST", action="/shiftchange">
+{# First Employee Shift Select #}
+    <p> {{ selemp1 }} </p>
+    <select id="scshift" name="scshift">
+        {% for e in e1week %}
+            <option value="{{ e }}">{{ e }} </option>
+        {%endfor%}
+    </select>
+    <input type="hidden" id="e1" name="e1" value="">
+    <input type="hidden" id="e2" name="e2" value="">
+    <input type="hidden" id="e3" name="e3" value="yes">
+    <input type="hidden" id="e4" name="e4" value="">
+    <input type="hidden" id="e5" name="e5" value="">
+    <input type="hidden" id="se1" name="se1" value="{{ selemp1 }}">
+    <input type="hidden" id="ss1" name="ss1" value="{{ shift1 }}">
+    <input type="submit" name="sh1" value="Trade"/>
+    <input type="submit" name="sh1" value="Give Away"/>
+    <input type="submit" name="sh1" value="Edit"/>
+    <input type="hidden" id="ct" name="ct" value="{{ ct }}"/>
+</form>
+{% endif %}
+
+{% if ph3 == "yes" and ct == "Edit" %}
+
+{% endif %}
+
+{% if ph3 == "yes" %}
+<form id="e2", method="POST", action="/shiftchange">
+{# Second Employee Select #}
+    <p>{{ selemp1 }}</p>
+    <p>{{ shift1 }}</p>
+    <p>{{ ct }} </p>
+    <select id="scemps2" name="scemps2">
+        {% for e in emps %}
+            <option value="{{ e }}">{{ e }} </option>
+        {%endfor%}
+    </select>
+    <input type="hidden" id="e1" name="e1" value="">
+    <input type="hidden" id="e2" name="e2" value="">
+    <input type="hidden" id="e3" name="e3" value="">
+
+    {% if ct == "Give" %}
+        <input type="hidden" id="e4" name="e4" value="">
+        <input type="hidden" id="e5" name="e5" value="yes">
+    {% else %}
+        <input type="hidden" id="e4" name="e4" value="yes">
+        <input type="hidden" id="e5" name="e5" value="">
+    {% endif %}
+    
+    <input type="hidden" id="se1" name="se1" value="{{ selemp1 }}">
+    <input type="hidden" id="ss1" name="ss1" value="{{ shift1 }}">
+    <input type="hidden" id="ct" name="ct" value="{{ ct }}"/>
+    <input type="hidden" id="se2" name="se2" value="{{ selemp2 }}">
+    <input type="submit" name="emp2" value="Second Employee"/>
+
+</form>
+{% endif %}
+
+{% if ph4 == "yes" and ct == "Trade" %}
+<form id="e1s", method="POST", action="/shiftchange">
+{# Second Employee Shift Select #}  
+        <p> {{ selemp1 }} </p>
+        <p> {{ shift1 }} </p>
+        <p> {{ selemp2 }} </p>
+        <p>{{ ct }} </p>
+        <select id="scshift2" , name="scshift2">
+            {% for e in e2week %}
+                <option value="{{ e }}">{{ e }} </option>
+            {%endfor%}
+        </select>
+        <input type="hidden" id="e1" name="e1" value="">
+        <input type="hidden" id="e2" name="e2" value="">
+        <input type="hidden" id="e3" name="e3" value="">
+        <input type="hidden" id="e4" name="e4" value="">
+        <input type="hidden" id="e5" name="e5" value="yes">
+        <input type="hidden" id="ct" name="ct" value="{{ ct }}"/>
+        <input type="hidden" id="se1" name="se1" value="{{ selemp1 }}">
+        <input type="hidden" id="se2" name="se2" value="{{ selemp2 }}">
+        <input type="hidden" id="ss1" name="ss1" value="{{ shift1 }}">
+        <input type="submit" name="sh1" value="Trade"/>
+</form>
+{% endif %}
+
+{% if ph5 == "yes" %}
+<form id="e2s", method="POST", action="/shiftchange">
+        <p> Confirm </p>
+        <p> {{ selemp1 }} </p>
+        <p> {{ shift1 }} </p>
+        <p> {{ selemp2 }} </p>
+        <p> {{ shift2 }} </p>
+        <p> {{ ct }} </p>
+            
+    <input type="hidden" id="e1" name="e1" value="">
+    <input type="hidden" id="e2" name="e2" value="">
+    <input type="hidden" id="e3" name="e3" value="">
+    <input type="hidden" id="e4" name="e4" value="">
+    <input type="hidden" id="e5" name="e5" value="">
+    <input type="hidden" id="ct" name="ct" value="{{ ct }}"/>
+    <input type="hidden" id="se1" name="se1" value="{{ selemp1 }}">
+    <input type="hidden" id="ss1" name="ss1" value="{{ shift1 }}">
+    <input type="hidden" id="se2" name="se2" value="{{ selemp2 }}">
+    <input type="hidden" id="ss2" name="ss2" value="{{ shift2 }}">
+    <input type="submit" id="sh2" name="sh2" value="Confirm">
+</form>
+{% endif %}
+{% endblock %}

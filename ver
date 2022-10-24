@@ -1,0 +1,12 @@
+8-30-22
+- Fixed Broken Schedule Importing, first emp's y index is recorded, shifts start from that index
+- Begin Logging System, currently only on some trades and schedule imports
+- Added Office Computer Login
+
+8-16-22
+- Updated Edit Selection and Edit Employee Page
+- Added Login system for managers
+
+8-6-22
+- Updated Switch shifts using ajax and javascript instead of all flask post calls
+- Upadated main page sorting to sort based on title, then time

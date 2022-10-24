@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+<h6>Email</h6>
+<form method="post" action="/dev">
+    <input type="submit" name="getpdf" value="Get PDF From Email" />
+</form>
+<br>
+<h6>CSV</h6>
+<form method="post" action="/dev">
+    <input type="file" name="selcsv" value="Select CSV" />
+    <input type="submit" name="impcsv" value="Import CSV" />
+</form>
+<br>
+<h6>PDF</h6>
+<form method="post" enctype="multipart/form-data" action="/dev">
+    <input type="file" name="selpdf" value="Select PDF"/>
+    <input type="submit" name="imppdf" value="Import PDF"/>
+</form>
+<br>
+<form method="post" action="/editemp">
+    <input type="submit" name="editemp" value="Edit Employee"/>
+</form>
+<form method="post" action="/editshi">
+    <input type="submit" name="editshift" value="Edit Shift"/>
+</form>
+<br>
+<form method="post" action="/addemp">
+    <input type="submit" name="addemp" value="Add Employee"/>
+</form>
+
+<form method="post" action="/addshi">
+    <input type="submit" name="addshi" value="Add Shift"/>
+</form>
+
+{% endblock %}

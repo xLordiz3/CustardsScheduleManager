@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="week">
+    <h2>Current Week</h2>
+    <p>{{ curdate }}</p>
+    <p>{{ curday }}</p>
+    <table title="{{ fdate }} - {{ ldate }}">
+        <caption> {{ fdate }} - {{ ldate }}</caption>
+        {% set days=["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"] %}
+        <tr>
+            {% for d in days %}
+                <th>{{ d }}</th>
+                {% for i in shifts %}
+                    {% if d == curday and i[1].day == d %}
+                        <td class={{ d }} style="background-color: lightgoldenrodyellow">{{ i[1].employee}} {{ i[1].time}}</td>
+                    {% elif i[1].day == d %}
+                        <td class={{ d }}>{{ i[1].employee}} {{ i[1].time}}</td>
+                    {% endif %}
+            {% endfor %}
+        </tr>
+            {% endfor %}
+        <br>
+    </table>
+</div>
+{% endblock %}

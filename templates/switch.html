@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<label>First Employee</label>
+<form>
+    <select onchange="sel1()" id="selemp" name="selemp">
+    {% for e in emps %}
+        <option value="{{ e }}">{{ e }}</option>
+    {% endfor %}
+    </select>
+</form>
+<br>
+<div id="shifts1l">
+<label>First Shift</label>
+<form>
+    <select onchange="typeSel()" id="shifts1" name="shifts1"></select>
+</form>
+</div>
+<br>
+<div id="typel">
+<label>Trade or Give Away?</label>
+<form>
+    <select onchange="sel2en()" id="type" name="type">
+        <option value=""></option>
+        <option value="TRADE">Trade</option>
+        <option value="GIVE">Give</option>
+        <option value="TRADESTART">Trade Start Time</option>
+        <option value="TRADEEND">Trade End Time</option>
+        <option value="SPLIT">Split</option>
+    </select>
+</form>
+</div>
+<br>
+<div id="selemp2l">
+<label>Second Employee</label>
+<form>
+    <select onchange="sel2()" id="selemp2" name="selemp2">
+        {% for e in emps %}
+            <option value="{{ e }}">{{ e }}</option>
+        {% endfor %}
+    </select>
+</form>
+</div>
+<br>
+<div id="shifts2l">
+<label>Second Shift</label>
+<form>
+    <select onchange="typeSel()" id="shifts2" name="shifts2"></select>
+</form>
+</div>
+<br>
+<div id="subl">
+<form>
+    <input type="button" onclick="change()" id="submit" value="Change"/>
+</form>
+</div>
+
+<script src="/static/scripts/jquery-1.10.2.js"></script>
+<script src="/static/scripts/switch.js"/>
+
+{% endblock %}

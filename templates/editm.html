@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+{% if type == "employee" %}
+<form>
+    <label>Name:</label>
+    <input type="text" value="{{ selemp.name }}" id="name">
+    <br>
+    <label>Role:</label>
+    <select id="role">
+        {% for r in roles %}
+            <option value="{{ r }}">{{ r }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label>Phone:</label>
+    <input type="text" value="{{ selemp.phone }}" id="phone">
+    <input type="hidden" value="{{ selemp.id }}" id="id">
+    <input type="button" onclick="empchange()" value="Change"/>
+</form>
+{% endif %}
+{% if type == "select" %}
+<form>
+    <select onchange="select()" id="choice" name="choice">
+        <option value=""></option>
+        <option value="employee">Employee</option>
+        <option value="shift">Shift</option>
+    </select>
+</form>
+<br>
+<div id="empsell">
+<form>
+    <select id="empchoice" name="empchoice">
+    {% for e in emps %}
+        <option value="{{ e }}">{{ e }}</option>
+    {% endfor %}
+    </select>
+    <input type="button" onclick="empsel()" id="edit" value="Edit"/>
+</form>
+</div>
+<div class="week" id="shiftsell">
+    <table title="shifts">
+        <caption>All Shifts</caption>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Options</th>
+        </tr>
+        {% for s in shifts %}
+        <tr>
+            <form method="post" action="/shifts">
+                <td>{{ s.employee }}</td>
+                <td>{{ s.date }}</td>
+                <td>{{ s.time }}</td>
+                <td><input type="submit" name="shiedit" id="shiedit" value="Edit"/> <input type="submit" name="shiswi" id="shiswi" value="Switch"/> <input type="hidden" name="eshift" id="eshift" value="{{ s.employee,s.date,s.time }}"/> </td>
+            </form>
+        </tr>
+        {% endfor %}
+        
+    </table>
+</div>
+{% endif %}
+<script src="/static/scripts/jquery-1.10.2.js"></script>
+<script>
+    var emp;
+    var shift;
+    var empchoicel = document.getElementById("empsell");
+    var shiftchoicel = document.getElementById('shiftsell');
+    var empchoice = document.getElementById('empchoice');
+    if(empchoicel != null)
+    {
+        empchoicel.style.display = 'none';
+    }
+    if(shiftchoicel != null)
+    {
+        shiftchoicel.style.display = 'none';
+    }
+    
+    function select()
+    {
+        if(choice.value == "")
+        {
+            empchoicel.style.display = 'none';
+            shiftchoicel.style.display = 'none';
+            var emc = document.querySelector('#empchoice')
+            emc.value = "";
+        }
+        if(choice.value == "employee")
+        {
+            empchoicel.style.display = 'block';
+            shiftchoicel.style.display = 'none';
+        }
+        if(choice.value == "shift")
+        {
+            shiftchoicel.style.display = 'block';
+            empchoicel.style.display = 'none';
+            
+        }
+    }
+
+    function empsel()
+    {
+        emp = empchoice.value;
+        window.location.replace('/edit/employee/' + emp);
+    }
+
+    function empchange()
+    {
+        var id = document.getElementById('id');
+        var name = document.getElementById('name');
+        var role = document.getElementById('role');
+        var phone = document.getElementById('phone');
+        console.log(name.value, role.value, phone.value);
+        $.ajax({
+            type: 'POST',
+            url: '/editempconf',
+            crossDomain: true,
+            data: {'id': id.value, 'name': name.value, 'role': role.value, 'phone': phone.value },
+            success: function(data)
+            {
+                console.log("Confirm");
+                window.location.replace('/edit');
+            }
+        });
+    }
+</script>
+{% endblock %}

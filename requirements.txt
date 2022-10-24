@@ -1,0 +1,8 @@
+Flask~=1.1
+flask-login
+camelot-py
+opencv-python
+apscheduler
+markupsafe==2.0.1
+ghostscript
+gunicorn
